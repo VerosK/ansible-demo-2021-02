@@ -1,0 +1,5 @@
+
+php_webserver_daemon: "httpd"
+
+php_packages_extra:
+  - php-pgsql
