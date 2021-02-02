@@ -3,7 +3,7 @@
 
 ## How to apply
 
-   ansible-playbook setup-site.yml
+    ansible-playbook setup-site.yml -b
 
 ## How to download roles
 
