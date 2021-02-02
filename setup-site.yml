@@ -19,3 +19,9 @@
     - role: adminer
       tags: adminer
 
+- name: Show debug output
+  hosts: all
+  tasks:
+    - name: Show debug
+      debug:
+        msg: "Use: http://{{ ansible_fqdn }}/  to access the result"
