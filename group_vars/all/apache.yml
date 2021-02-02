@@ -1,0 +1,6 @@
+
+apache_vhosts:
+  - servername: "{{ ansible_fqdn }}"
+    documentroot: "{{ adminer_dir }}"
+    extra_parameters: |
+        DirectoryIndex index.php
