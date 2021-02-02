@@ -1,4 +1,3 @@
-
 - name: Setup Postgresql with web interface
   hosts: all
 
