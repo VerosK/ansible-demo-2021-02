@@ -1,0 +1,11 @@
+# group_vars/all/postgresql.yml
+
+postgresql_users:
+  - name: demo
+    password: nbusr123
+    state: present
+
+postgresql_databases:
+  - name: demo
+    owner: demo
+    state: present
