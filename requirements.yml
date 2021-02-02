@@ -2,3 +2,7 @@
 roles:
 - name: geerlingguy.postgresql
   version: 3.0.0
+- name: geerlingguy.apache
+  version: 3.1.4
+- name: geerlingguy.php
+  version: 4.5.1
