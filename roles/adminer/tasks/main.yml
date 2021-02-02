@@ -1,0 +1,11 @@
+
+- name: Create adminer directory
+  file:
+    path: /opt/adminer
+    state: directory
+
+- name: Download Adminer source
+  get_url:
+    url: https://github.com/vrana/adminer/releases/download/v4.7.8/adminer-4.7.8.php
+    dest: /opt/adminer/index.php
+    mode: 0444
