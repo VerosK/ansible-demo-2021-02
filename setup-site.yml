@@ -1,0 +1,6 @@
+
+- name: Setup Postgresql with web interface
+  hosts: all
+
+  roles:
+    - role: geerlingguy.postgresql
