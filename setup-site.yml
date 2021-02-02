@@ -3,7 +3,7 @@
 
   pre_tasks:
     - name: Ensure  nginx is stopped
-      state:
+      service:
         name: nginx
         state: stopped
         enabled: false
