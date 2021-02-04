@@ -1,0 +1,9 @@
+- name: Install PostgreSQL repo
+  yum:
+    name: '{{ pgdg_yumrepo_package }}'
+    state: present
+  when: ansible_distribution == 'CentOS'
+
+- fail:
+    msg: "Only CentOS is supported"
+  when: ansible_distribution != 'CentOS'

@@ -9,6 +9,9 @@ postgresql_databases:
   - name: demo
     owner: demo
     state: present
+  - name: foo
+    owner: demo
+    state: present
 
 postgresql_hba_entries:
   - { type: local, database: all, user: postgres, auth_method: peer }

@@ -1,0 +1,62 @@
+- name: '{{ pg_instance.name }} : debug'
+  debug:
+    var: pg_instance
+
+- name: Prepare facts
+  set_fact:
+    postgresql_data_dir: '{{ pg_instance.base_dir }}/data'
+    postgresql_user: postgres
+    postgresql_service_name: 'postgresql-{{ pg_instance.name }}'
+
+- name: Ensure directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ postgresql_user }}'
+    group: '{{ postgresql_user }}'
+    mode: 0700
+  loop:
+    - '{{ pg_instance.base_dir }}'
+    - '{{ pg_instance.base_dir }}/backups'
+    - '{{ postgresql_data_dir }}'
+
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: "{{ postgresql_data_dir }}/PG_VERSION"
+  register: pgdata_dir_version
+
+- name: Ensure PostgreSQL database is initialized.
+  command: "{{ pg_instance.bin_dir }}/initdb -D {{ postgresql_data_dir }}"
+  when: not pgdata_dir_version.stat.exists
+  become: true
+  become_user: "{{ postgresql_user }}"
+  # See: https://github.com/ansible/ansible/issues/16048#issuecomment-229012509
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: Create systemd unit
+  template:
+    src: psql.service.j2
+    dest: /etc/systemd/system/{{ postgresql_service_name }}.service
+    mode: 644
+    owner: root
+
+- name: Change port
+  lineinfile:
+    path: '{{ postgresql_data_dir }}/postgresql.conf'
+    line: 'port = {{ pg_instance.port }}'
+    regex: '^#? *port ?= ?'
+  register: _pg_port
+
+- name: Restart when required
+  service:
+    name: '{{ postgresql_service_name }}'
+    state: restarted
+  when: _pg_port is changed
+
+- name: Ensure the database start
+  service:
+    name: '{{ postgresql_service_name }}'
+    state: started
+    enabled: true
+

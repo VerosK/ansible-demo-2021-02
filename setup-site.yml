@@ -1,27 +1,18 @@
 - name: Setup Postgresql with web interface
   hosts: all
 
-  pre_tasks:
-    - name: Ensure  nginx is stopped
-      service:
-        name: nginx
-        state: stopped
-        enabled: false
-      ignore_errors: yes
-
   roles:
-    - role: geerlingguy.postgresql
-      tags: postgresql
-    - role: geerlingguy.apache
-      tags: apache
-    - role: geerlingguy.php
-      tags: php
-    - role: adminer
-      tags: adminer
+    - role: VerosK.pgdg
+      tags: pgdg
+    - role: local.postgres_versions
+      tags: main
 
-- name: Show debug output
-  hosts: all
-  tasks:
-    - name: Show debug
-      debug:
-        msg: "Use: http://{{ ansible_fqdn }}/  to access the result"
+#    - role: geerlingguy.postgresql
+#      tags: postgresql
+#    - role: geerlingguy.apache
+#      tags: apache
+#    - role: geerlingguy.php
+#      tags: php
+#    - role: adminer
+#      tags: adminer
+

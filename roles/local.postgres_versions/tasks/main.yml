@@ -1,0 +1,11 @@
+
+- name: Add packages
+  yum:
+    name: '{{ postgresql_packages }}'
+    state: present
+
+- name: Setup psql instances
+  include_tasks: ensure-instance.yml
+  loop: '{{ postgresql_instances }}'
+  loop_control:
+    loop_var: pg_instance

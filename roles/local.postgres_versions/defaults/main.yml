@@ -1,0 +1,23 @@
+
+postgresql_packages:
+  - postgresql12-server
+  - postgresql11-server
+
+postgresql_instances:
+  - name: 12-main
+    version: 12
+    port: 5432
+    base_dir: /var/lib/pgsql/12-main/
+    bin_dir: /usr/pgsql-12/bin
+
+  - name: 12-devel
+    version: 12
+    port: 5433
+    base_dir: /var/lib/pgsql/12-devel/
+    bin_dir: /usr/pgsql-12/bin
+
+  - name: 11-devel
+    version: 11
+    port: 5434
+    base_dir: /var/lib/pgsql/11-devel/
+    bin_dir: /usr/pgsql-11/bin
