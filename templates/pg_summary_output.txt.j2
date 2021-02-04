@@ -1,0 +1,11 @@
+# Postgresql inventory on {{ ansible_host }}
+
+{% for hostname,vars in hostvars.items() %}
+## {{ hostname }}
+{{ vars.ansible_fqdn }}( {{ vars.ansible_default_ipv4.address }} )
+
+{% for instance in lookup('together', vars._psql.results, vars.pg_instances, wantlist=1) %}
+{{  vars.ansible_default_ipv4.address }}:{{ instance.1.port }}: {{  instance.0.stdout }}
+{% endfor %}
+
+{% endfor %}

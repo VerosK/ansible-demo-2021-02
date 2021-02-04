@@ -1,7 +1,7 @@
 - name: Show postgres version
   hosts: db_hosts
   user: root
-  gather_facts: no
+
 
   tasks:
    - name: Show uptime
@@ -28,4 +28,10 @@
        src: pg_output.txt.j2
        dest: "./outputs/{{ ansible_host }}.txt"
      delegate_to: localhost
+
+   - template:
+       src: pg_summary_output.txt.j2
+       dest: "./outputs/summary.txt"
+     delegate_to: localhost
+     run_once: yes
 
