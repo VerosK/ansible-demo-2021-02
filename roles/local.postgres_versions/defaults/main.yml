@@ -6,7 +6,7 @@ postgresql_packages:
 postgresql_instances:
   - name: 12-main
     version: 12
-    port: 5432
+    port: 5430
     base_dir: /var/lib/pgsql/12-main/
     bin_dir: /usr/pgsql-12/bin
 
