@@ -1,6 +1,6 @@
 
 postgresql_packages:
-  - postgresql12-server
+  - postgresql12-server-12.3-1PGDG.rhel7
   - postgresql11-server
 
 postgresql_instances:
