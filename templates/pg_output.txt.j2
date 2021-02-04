@@ -1,0 +1,6 @@
+# Postgresql inventory on {{ ansible_host  }}
+
+## Instances
+{% for instance in lookup('together', _psql.results, pg_instances, wantlist=1) %}
+{{ instance.1.port }}: {{  instance.0.stdout }}
+{%  endfor %}

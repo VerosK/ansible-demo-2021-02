@@ -1,0 +1,31 @@
+- name: Show postgres version
+  hosts: db_hosts
+  user: root
+  gather_facts: no
+
+  tasks:
+   - name: Show uptime
+     shell: uptime
+     register: _uptime
+
+   - debug: 
+       msg: '{{ _uptime.stdout }}'
+
+   - name: Get postgres version
+     shell: 'psql -p {{ item.port }} -U postgres -t -c "select version();"'
+     loop: '{{ pg_instances }}'
+     register: _psql
+
+   - debug:
+       var: _psql
+
+   - copy:
+        content: '{{ _psql | to_nice_json }}'
+        dest: "./outputs/{{ ansible_host }}.json"
+     delegate_to: localhost
+
+   - template:
+       src: pg_output.txt.j2
+       dest: "./outputs/{{ ansible_host }}.txt"
+     delegate_to: localhost
+
