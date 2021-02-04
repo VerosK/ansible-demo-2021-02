@@ -60,3 +60,12 @@
     state: started
     enabled: true
 
+- name: Ensure databases
+  postgresql_db:
+      port: '{{ pg_instance.port }}'
+      name: '{{ item }}'
+      state: present
+  become_user: 'postgres'
+  become: true
+  loop: '{{ pg_instance.databases|default([]) }}'
+
