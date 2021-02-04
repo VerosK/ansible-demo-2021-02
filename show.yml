@@ -35,3 +35,19 @@
      delegate_to: localhost
      run_once: yes
 
+   - name: Check instance databases
+     include_tasks: 'check-instance.yml'
+     loop: '{{ pg_instances }}'
+     loop_control:
+       loop_var: pg_instance
+
+#   - name: Loop over databases
+#     debug:
+#        msg: '{{ item }}'
+#     with_subelements:
+#       - '{{ pg_instances }}'
+#       - databases
+
+
+
+

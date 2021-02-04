@@ -1,0 +1,21 @@
+# expects pg_instnacess
+
+- name: '{{ pg_instance.name }}: Check database size on instances'
+  shell:
+      psql -p {{ pg_instance.port }} -U postgres -t -d {{ item }}
+          -c "select pg_size_pretty( pg_database_size('{{ item }}') );"
+  loop: '{{ pg_instance.databases }}'
+  register: _db_size
+
+- name: Store DB output
+  copy:
+    content: '{{ _db_size|to_nice_json }}'
+    dest: "./outputs/{{ ansible_host }}/{{ pg_instance }}.json"
+  delegate_to: localhost
+#
+#- name: Update DB size on registry
+#  pg_update_db_size:
+#      src_db: "{{ item }}"
+#      target_db: "{{ target_db }}"
+#      host_name: '{{ ansible_host }}'
+#  loop: '{{ pg_instance.databases }}'
